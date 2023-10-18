@@ -1,6 +1,6 @@
 import os
 from pyrogram import Client, filters
-from pyrogram.raw.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, ChannelAdminLogEventActionParticipantLeave
+from pyrogram.raw.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, ChatPrivileges
 
 pr0fess0r_99=Client(
     "𝗕𝗼𝘁 𝗦𝘁𝗮𝗿𝘁𝗲𝗱 𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 𝗢𝗽𝘂𝘀𝗧𝗲𝗰𝗵𝘇",
@@ -24,12 +24,12 @@ async def start(client: pr0fess0r_99, message: Message):
       ]]
     await message.reply_text(text="**𝙷𝙴𝙻𝙻𝙾...⚡\n\n𝙸𝙰𝙼 𝙰 𝚂𝙸𝙼𝙿𝙻𝙴 𝚃𝙴𝙻𝙴𝙶𝚁𝙰𝙼 𝙰𝚄𝚃𝙾 𝚁𝙴𝚀𝚄𝙴𝚂𝚃 𝙰𝙲𝙲𝙴𝙿𝚃 𝙱𝙾𝚃.\n𝙵𝙾𝚁 𝚈𝙾𝚄𝚁 𝙲𝙷𝙰𝚃𝚂 𝙲𝚁𝙴𝙰𝚃𝙴 𝙾𝙽𝙴 𝙱𝙾𝚃... \n𝚅𝙸𝙳𝙴𝙾 𝙾𝙽 𝙼𝚈 𝚈𝙾𝚄𝚃𝚄𝙱𝙴 𝙲𝙷𝙰𝙽𝙽𝙴𝙻**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
 
-@pr0fess0r_99.on_ChannelAdminLogEventActionParticipantLeave(filters.chat(CHAT_ID))
+@pr0fess0r_99.on_left_mem(filters.chat(CHAT_ID))
 async def autoban(client: pr0fess0r_99, message: ChatleftMembers):
     chat=message.chat # Chat
     user=message.from_user # User
     print(f"{user.first_name} 𝙹𝙾𝙸𝙽𝙴𝙳 ⚡") # Logs
-    await client.ban_ChannelAdminLogEventActionParticipantLeave(chat_id=chat.id, user_id=user.id)
+    await client.ban_left_mem(chat_id=chat.id, user_id=user.id)
     if APPROVED == "on":
         await client.send_message(chat_id=chat.id, text=TEXT.format(mention=user.mention, title=chat.title))       
 
