@@ -1,6 +1,6 @@
 import os
 from pyrogram import Client, filters
-from pyrogram.raw.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, ChatPrivileges
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, ChatPrivileges
 
 pr0fess0r_99=Client(
     "𝗕𝗼𝘁 𝗦𝘁𝗮𝗿𝘁𝗲𝗱 𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 𝗢𝗽𝘂𝘀𝗧𝗲𝗰𝗵𝘇",
