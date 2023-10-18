@@ -1,6 +1,6 @@
 import os
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, ChatleftMembers
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, User, left_mem
 
 pr0fess0r_99=Client(
     "𝗕𝗼𝘁 𝗦𝘁𝗮𝗿𝘁𝗲𝗱 𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 𝗢𝗽𝘂𝘀𝗧𝗲𝗰𝗵𝘇",
@@ -29,7 +29,7 @@ async def autoban(client: pr0fess0r_99, message: ChatleftMembers):
     chat=message.chat # Chat
     user=message.from_user # User
     print(f"{user.first_name} 𝙹𝙾𝙸𝙽𝙴𝙳 ⚡") # Logs
-    await client.ban_chat_left(chat_id=chat.id, user_id=user.id)
+    await client.ban_left_mem(chat_id=chat.id, user_id=user.id)
     if APPROVED == "on":
         await client.send_message(chat_id=chat.id, text=TEXT.format(mention=user.mention, title=chat.title))       
 
