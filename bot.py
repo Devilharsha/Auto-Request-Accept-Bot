@@ -38,6 +38,7 @@ async def check_member_update(client, message):
             user = member.user
             logger.info(f"{user.first_name} left the chat ⚡")
             await client.kick_chat_member(chat.id, user.id)
+            logger.info(f"{user.first_name} has been banned ⚡")  # Added log statement for banning
             if LEFTED == "on":
                 await client.send_message(user.id, TEXT.format(mention=user.mention, title=chat.title))
     except Exception as e:
