@@ -1,6 +1,7 @@
+
 import os
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, ChatMember
 
 pr0fess0r_99 = Client(
     "𝗕𝗼𝘁 𝗦𝘁𝗮𝗿𝘁𝗲𝗱 𝗣𝗹𝗲𝘢𝘀𝗲 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 𝗢𝗽𝘂𝘀𝗧𝗲𝗰𝗵𝘇",
@@ -22,16 +23,18 @@ async def start(client, message):
     ], [
         InlineKeyboardButton("𝚂𝚄𝙱𝚂𝚂𝚁𝙸𝙱𝙴", url=f"https://youtube.com/channel/UCf_dVNrilcT0V2R--HbYpMA")
     ]]
-    await message.reply_text(text="**𝙷𝙴𝙻𝙻𝙾...⚡\n\n𝙸𝙰𝙼 𝙰 𝚂𝙸𝙼𝙿𝙻𝙴 𝚃𝙴𝙻𝙴𝙶𝚁𝙰𝙄 𝙰𝚄𝚃𝙾 𝚁𝙴𝚀𝚄𝙴𝙂𝚂𝚃 𝙰𝙲𝙲𝙴𝙿𝚃 𝙱𝙾𝚃.\n𝙵𝙾𝚁 𝚈𝙾𝚄𝚁 𝙲𝙷𝙰𝚃𝚂 𝙲𝚁𝙴𝙰𝚃𝙴 𝙾𝙽𝙴 𝙱𝙾𝚃... \n𝚅𝙸𝙳𝙴𝙾 𝙾𝙽 𝙼𝚈 𝚈𝙾𝚄𝚃𝚄𝙱𝙴 𝙲𝙷𝙰𝙽𝙽𝙴𝙻**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
+    await message.reply_text(text="**𝙷𝙴𝙻𝙻𝙾...⚡\n\n𝙸𝙰𝙼 𝙰 𝚂𝙸𝙼𝙿𝙻𝙴 𝚃𝙴𝙻𝙴𝙶𝚁𝙰𝙄 𝙰𝚄𝚃𝙾 𝚁𝙴𝚀𝚄𝙴𝙶𝚂𝚃 𝙰𝙲𝙲𝙴𝙿𝚃 𝙱𝙾𝚃.\n𝙵𝙾𝚁 𝚈𝙾𝚄𝚁 𝙲𝙷𝙰𝚃𝚂 𝙲𝚁𝙴𝙰𝚃𝙴 𝙾𝙽𝙴 𝙱𝙾𝚃... \n𝚅𝙸𝙳𝙴𝙾 𝙾𝙽 𝙼𝚈 𝚈𝙾𝚄𝚃𝚄𝙱𝙴 𝙲𝙷𝙰𝙽𝙽𝙴𝙻**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
 
-@pr0fess0r_99.on_chat_member_left(CHAT_ID)
-async def autoban(client, message):
-    chat = message.chat  # Chat
-    user = message.from_user  # User
-    print(f"{user.first_name} 𝙹𝙾𝙸𝙽𝙴𝙳 ⚡")  # Logs
-    await client.kick_chat_member(chat.id, user.id)
-    if LEFTED == "on":
-        await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
+@pr0fess0r_99.on_chat_member_updated(CHAT_ID)
+async def check_member_update(client, message):
+    member = message.new_chat_member
+    if member.status == "left":
+        chat = message.chat  # Chat
+        user = member.user  # User
+        print(f"{user.first_name} 𝙹𝙾𝙸𝙽𝙴𝙳 ⚡")  # Logs
+        await client.kick_chat_member(chat.id, user.id)
+        if LEFTED == "on":
+            await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
 
 print("𝗕𝗼𝘁 𝗦𝘁𝗮𝗿𝘁𝗲𝗱 𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝘂𝗯𝘀𝗰𝗿𝗶𝗯𝗲 𝗢𝗽𝘂𝘀𝗧𝗲𝗰𝗵𝘇")
 pr0fess0r_99.run()
