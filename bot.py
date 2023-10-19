@@ -1,4 +1,3 @@
-
 import os
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, ChatMember
@@ -11,7 +10,7 @@ pr0fess0r_99 = Client(
 )
 
 CHAT_ID = int(os.environ.get("CHAT_ID", None))
-TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nWelcome To {title}\n\nYour Auto Kicked")
+TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nWelcome To {title}\n\nYour Auto Banned")  # Updated message to "Auto Banned"
 LEFTED = os.environ.get("BAN_WELCOME", "on").lower()
 
 @pr0fess0r_99.on_message(filters.private & filters.command(["start"]))
@@ -32,7 +31,7 @@ async def check_member_update(client, message):
         chat = message.chat  # Chat
         user = left_member  # User
         print(f"{user.first_name} 𝙹𝙾𝙸𝙽𝙴𝙳 ⚡")  # Logs
-        await client.kick_chat_member(chat.id, user.id)
+        await client.ban_chat_member(chat.id, user.id)  # Updated to "ban_chat_member"
         if LEFTED == "on":
             await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
 
