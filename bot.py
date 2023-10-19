@@ -1,6 +1,11 @@
 import os
+import logging
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name)
 
 pr0fess0r_99 = Client(
     "Bot Started Please Subscribe OpusTechz",
@@ -25,14 +30,18 @@ async def start(client, message):
 
 @pr0fess0r_99.on_chat_member_updated()
 async def check_member_update(client, message):
-    member = message.new_chat_member
-    if member and member.status == "left":
-        chat = message.chat
-        user = member.user
-        print(f"{user.first_name} left the chat ⚡")  # Logs
-        await client.kick_chat_member(chat.id, user.id)
-        if LEFTED == "on":
-            await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
+    try:
+        member = message.new_chat_member
+        if member and member.status == "left":
+            chat = message.chat
+            user = member.user
+            logger.info(f"{user.first_name} left the chat ⚡")
+            await client.kick_chat_member(chat.id, user.id)
+            if LEFTED == "on":
+                await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}")
 
-print("Bot Started, Monitoring for Members Leaving")
-pr0fess0r_99.run()
+if __name__ == "__main__":
+    logger.info("Bot Started, Monitoring for Members Leaving")
+    pr0fess0r_99.run()
