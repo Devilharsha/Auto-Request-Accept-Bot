@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name)
+logger = logging.getLogger(__name__)
 
 # Initialize the Pyrogram Client
 api_id = os.getenv("API_ID")
@@ -32,6 +32,11 @@ async def on_member_left(client, message):
             await client.kick_chat_member(chat_id, user.id)
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
+
+# Ping command handler
+@app.on_message(filters.command("ping") & filters.chat(chat_id))
+async def ping_command(client, message):
+    await message.reply_text("Pong!")
 
 if __name__ == "__main__":
     logger.info("Bot Started, Monitoring for Members Leaving and Banning Them")
