@@ -5,7 +5,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name)
+logger = logging.getLogger(__name__)
 
 pr0fess0r_99 = Client(
     "Bot Started Please Subscribe OpusTechz",
@@ -14,7 +14,8 @@ pr0fess0r_99 = Client(
     api_hash=os.environ["API_HASH"]
 )
 
-CHAT_ID = -1001792377084  # Replace with the actual chat ID
+# Define the chat or channel ID to monitor
+CHAT_ID = os.environ.get("CHAT_ID")
 TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nYou've been banned from {title}.")
 LEFTED = os.environ.get("BAN_WELCOME", "on").lower()
 
@@ -32,7 +33,7 @@ async def start(client, message):
 async def check_member_update(client, message):
     try:
         member = message.new_chat_member
-        if member and member.status == "left":
+        if member and member.status == "left" and str(message.chat.id) == CHAT_ID:
             chat = message.chat
             user = member.user
             logger.info(f"{user.first_name} left the chat ⚡")
