@@ -5,7 +5,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name)
 
 pr0fess0r_99 = Client(
     "Bot Started Please Subscribe OpusTechz",
@@ -15,7 +15,7 @@ pr0fess0r_99 = Client(
 )
 
 CHAT_ID = -1001792377084  # Replace with the actual chat ID
-TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nWelcome To {title}\n\nYou've been banned.")
+TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nYou've been banned from {title}.")
 LEFTED = os.environ.get("BAN_WELCOME", "on").lower()
 
 @pr0fess0r_99.on_message(filters.private & filters.command(["start"]))
@@ -38,20 +38,10 @@ async def check_member_update(client, message):
             logger.info(f"{user.first_name} left the chat ⚡")
             await client.kick_chat_member(chat.id, user.id)
             if LEFTED == "on":
-                await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
-    except Exception as e:
-        logger.error(f"An error occurred: {str(e)}")
-
-# Auto-accept join requests
-@pr0fess0r_99.on_chat_member_updated()
-async def auto_accept_join_request(client, message):
-    try:
-        member = message.new_chat_member
-        if member and member.status == "member":
-            await client.promote_chat_member(CHAT_ID, member.user.id, can_send_messages=True)
+                await client.send_message(user.id, TEXT.format(mention=user.mention, title=chat.title))
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
-    logger.info("Bot Started, Monitoring for Members Leaving and Auto-Accepting Join Requests")
+    logger.info("Bot Started, Monitoring for Members Leaving and Sending Ban Messages")
     pr0fess0r_99.run()
