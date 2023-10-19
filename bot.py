@@ -23,12 +23,12 @@ async def start(client, message):
     ]
     await message.reply_text(text="**Hello! I am a simple bot. For your chat's protection, I'll ban anyone who leaves.**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
 
-@pr0fess0r_99.on_chat_member_left(CHAT_ID)
-async def check_member_left(client, message):
-    member = message.left_chat_member
-    chat = message.chat  # Chat
-    if member:
-        user = member  # User
+@pr0fess0r_99.on_chat_member_updated(CHAT_ID)
+async def check_member_update(client, message):
+    member = message.new_chat_member
+    if member and member.status == "left":
+        chat = message.chat
+        user = member.user
         print(f"{user.first_name} left the chat ⚡")  # Logs
         await client.kick_chat_member(chat.id, user.id)
         if LEFTED == "on":
