@@ -29,18 +29,17 @@ async def start(client, message):
     ]
     await message.reply_text(text="**Hello! I am a simple bot. For your chat's protection, I'll ban anyone who leaves.**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
 
-@pr0fess0r_99.on_chat_member_updated()
-async def check_member_update(client, message):
+@pr0fess0r_99.on_chat_member_left()
+async def ban_left_member(client, message):
     try:
-        member = message.new_chat_member
-        if member and member.status == "left" and str(message.chat.id) == CHAT_ID:
-            chat = message.chat
-            user = member.user
+        user = message.left_chat_member
+        chat = message.chat
+        if user:
             logger.info(f"{user.first_name} left the chat ⚡")
             await client.kick_chat_member(chat.id, user.id)
-            logger.info(f"{user.first_name} has been banned ⚡")  # Added log statement for banning
+            logger.info(f"{user.first_name} has been banned ⚡")
             if LEFTED == "on":
-                await client.send_message(user.id, TEXT.format(mention=user.mention, title=chat.title))
+                await client.send_message(chat.id, TEXT.format(mention=user.mention, title=chat.title))
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
 
