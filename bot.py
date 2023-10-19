@@ -42,6 +42,16 @@ async def check_member_update(client, message):
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
 
+# Auto-accept join requests
+@pr0fess0r_99.on_chat_member_updated()
+async def auto_accept_join_request(client, message):
+    try:
+        member = message.new_chat_member
+        if member and member.status == "member":
+            await client.promote_chat_member(CHAT_ID, member.user.id, can_send_messages=True)
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}")
+
 if __name__ == "__main__":
-    logger.info("Bot Started, Monitoring for Members Leaving")
+    logger.info("Bot Started, Monitoring for Members Leaving and Auto-Accepting Join Requests")
     pr0fess0r_99.run()
