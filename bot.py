@@ -9,7 +9,7 @@ pr0fess0r_99 = Client(
     api_hash=os.environ["API_HASH"]
 )
 
-CHAT_ID = int(os.environ.get("CHAT_ID", None))
+CHAT_ID = -1001792377084  # Replace with the actual chat ID
 TEXT = os.environ.get("BAN_WELCOME_MESSAGE", "Hello {mention}\nWelcome To {title}\n\nYou've been banned.")
 LEFTED = os.environ.get("BAN_WELCOME", "on").lower()
 
@@ -23,7 +23,7 @@ async def start(client, message):
     ]
     await message.reply_text(text="**Hello! I am a simple bot. For your chat's protection, I'll ban anyone who leaves.**", reply_markup=InlineKeyboardMarkup(button), disable_web_page_preview=True)
 
-@pr0fess0r_99.on_chat_member_updated(CHAT_ID)
+@pr0fess0r_99.on_chat_member_updated()
 async def check_member_update(client, message):
     member = message.new_chat_member
     if member and member.status == "left":
